@@ -110,12 +110,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         `, mySprite, projectile_vx, projectile_vy)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite2, otherSprite2) {
+    game.gameOver(false)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(otherSprite, effects.ashes, 200)
     sprites.destroy(sprite)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.gameOver(false)
+    info.changeScoreBy(1)
 })
 let projectile: Sprite = null
 let baddy: Sprite = null
@@ -123,6 +124,7 @@ let projectile_vx = 0
 let projectile_vy = 0
 let projectile_speed = 0
 let mySprite: Sprite = null
+info.setScore(0)
 sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
 tiles.setCurrentTilemap(tilemap`level`)
 mySprite = sprites.create(img`
